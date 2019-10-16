@@ -6,10 +6,14 @@ import ForgotPassword from '../components/Auth/ForgotPassword'
 import SearchLinks from '../components/Link/SearchLinks'
 import LinkList from '../components/Link/LinkList'
 import LinkDetail from '../components/Link/LinkDetail'
+import Header from '../components/Header'
 
 function App() {
   return (
     <BrowserRouter>
+      <div className="app-container">
+        <Header/>
+        <div className="route-container">
       <Switch>
         <Route exact path="/" render={()=><Redirect to="/new/1"/>} />
         <Route path='/create' component={CreateLink} />
@@ -20,6 +24,8 @@ function App() {
         <Route path='/new/:page' component={LinkList} />
         <Route path='/link/:linkId' component={LinkDetail} />
       </Switch>
+      </div>
+      </div>
     </BrowserRouter>
   );
 }
