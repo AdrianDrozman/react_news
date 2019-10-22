@@ -1,6 +1,7 @@
-import app from 'firebase/app';
-import 'firebase/auth';
-import firebaseConfig from './config';
+import app from "firebase/app";
+import "firebase/auth";
+import firebaseConfig from "./config";
+
 // Initialize Firebase
 
 class Firebase {
@@ -20,7 +21,11 @@ class Firebase {
   async login(email, password) {
     return await this.auth.signInWithEmailAndPassword(email, password);
   }
+  async logout() {
+    await this.auth.signOut()
+  }
 }
+
 const firebase = new Firebase();
 
 export default firebase;

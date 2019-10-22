@@ -1,12 +1,12 @@
-import React from 'react';
-import useFormValidation from './useFormValidation';
-import validateLogin from './validateLogin';
-import firebase from '../../firebase';
+import React from "react";
+import useFormValidation from "./useFormValidation";
+import validateLogin from "./validateLogin";
+import firebase from "../../firebase";
 
 const INITIAL_STATE = {
-  name: '',
-  email: '',
-  password: ''
+  name: "",
+  email: "",
+  password: ""
 };
 
 function Login(props) {
@@ -17,9 +17,9 @@ function Login(props) {
     isSubmitting,
     handleBlur,
     errors
-  } = useFormValidation(INITIAL_STATE, validateLogin,authenticateUser);
+  } = useFormValidation(INITIAL_STATE, validateLogin, authenticateUser);
   const [login, setLogin] = React.useState(true);
-  const [firebaseError,setFirebaseError] = React.useState(null)
+  const [firebaseError, setFirebaseError] = React.useState(null);
 
   async function authenticateUser() {
     const { name, email, password } = values;
@@ -27,65 +27,64 @@ function Login(props) {
       login
         ? await firebase.login(email, password)
         : await firebase.register(name, email, password);
-        props.history.push('/');
-      
+      props.history.push("/");
     } catch (error) {
-      console.error('Authentication Error',error)
-      setFirebaseError(error.message)
+      console.error("Authentication Error", error);
+      setFirebaseError(error.message);
     }
   }
   return (
     <div>
-      <h2 className='mv3'>{login ? 'Login' : 'Create Account'}</h2>
-      <form className='flex flex-column' onSubmit={handleSubmit}>
+      <h2 className="mv3">{login ? "Login" : "Create Account"}</h2>
+      <form className="flex flex-column" onSubmit={handleSubmit}>
         {!login && (
           <input
-            type='text'
-            placeholder='Your Name'
-            autoComplete='off'
+            type="text"
+            placeholder="Your Name"
+            autoComplete="off"
             onChange={handleChange}
-            name='name'
+            name="name"
             value={values.name}
           />
         )}
         <input
-          type='email'
-          placeholder='Your Email'
-          autoComplete='off'
+          type="email"
+          placeholder="Your Email"
+          autoComplete="off"
           onChange={handleChange}
-          name='email'
+          name="email"
           value={values.email}
           onBlur={handleBlur}
-          className={errors.email && 'error-input'}
+          className={errors.email && "error-input"}
         />
-        {errors.email && <p className='error-text'>{errors.email}</p>}
-     
+        {errors.email && <p className="error-text">{errors.email}</p>}
+
         <input
-          type='password'
-          placeholder='Choose a secure password'
+          type="password"
+          placeholder="Choose a secure password"
           onChange={handleChange}
-          name='password'
+          name="password"
           value={values.password}
           onBlur={handleBlur}
-          className={errors.password && 'error-input'}
+          className={errors.password && "error-input"}
         />
-        {errors.password && <p className='error-text'>{errors.password}</p>}
+        {errors.password && <p className="error-text">{errors.password}</p>}
         {firebaseError && <p className="error-text">{firebaseError}</p>}
-        <div className='flex mt3'>
+        <div className="flex mt3">
           <button
-            type='submit'
-            className='button pointer mr2'
+            type="submit"
+            className="button pointer mr2"
             disabled={isSubmitting}
-            style={{ background: isSubmitting ? 'grey' : 'orange' }}
+            style={{ background: isSubmitting ? "grey" : "orange" }}
           >
             Submit
           </button>
           <button
-            type='button'
-            className='pointer button'
+            type="button"
+            className="pointer button"
             onClick={() => setLogin(prevLogin => !prevLogin)}
           >
-            {login ? 'need to create an account?' : 'alread have an account ?'}
+            {login ? "need to create an account?" : "alread have an account ?"}
           </button>
         </div>
       </form>
